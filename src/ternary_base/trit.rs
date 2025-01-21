@@ -160,7 +160,19 @@ struct UnbalancedTrit {
 
 impl TernaryArithmetic for UnbalancedTrit {
     fn add(&mut self, other: &Trit) -> Trit {
-        
+        let lhs: i8 = self.trit.value.into();
+        let rhs: i8 = other.value.into();
+        let sum = lhs + rhs;
+        if sum == 4 {
+            self.trit.value = TernaryValue::ONE;
+            Trit::new(TernaryValue::ONE)
+        } else if sum == 3 {
+            self.trit.value = TernaryValue::ONE;
+            Trit::new(TernaryValue::ZERO)
+        } else {
+            self.trit.value = TernaryValue::try_from(sum).unwrap();
+            Trit::new(TernaryValue::ZERO)
+        }
     }
 
     fn sub(&mut self, other: &Trit) -> Trit {
